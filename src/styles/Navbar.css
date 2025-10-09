@@ -1,0 +1,125 @@
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+/* --- Navbar Base Styles (Modernized) --- */
+.navbar-dark-pro {
+  /* position: relative; */
+  /* background: #CBAACB  ; */
+  /* background: #F3C6C0  ; */
+  /* background: #F496F4  ; */
+  /* background: #5D2FB2  ; */
+  background: #D8B4DD;
+  backdrop-filter: blur(8px);
+  padding: 1rem 0;
+  animation: fadeInDown 0.8s ease-out forwards;
+  z-index: 1030;
+  /* Keep this high so it's on top of other content */
+}
+/* The interactive glow effect */
+.navbar-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at var(--x, 0px) 50%, rgba(239, 209, 16, 0.2) 0%, transparent 40%);
+  transition: background 0.2s ease;
+  pointer-events: none;
+  /* Prevents the glow from interfering with clicks */
+}
+/* --- Nav Links and Icons --- */
+.nav-link-pro {
+  color: #010101 !important;
+  transition: color 0.3s ease, transform 0.3s ease;
+  font-weight: 500;
+  position: relative;
+  /* font-size: 1.5rem; */
+  /* overflow: hidden; */
+  z-index: 10;
+}
+.nav-link-pro:hover {
+  color: #fff !important;
+  transform: translateY(-2px);
+}
+.nav-link-pro::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #2575FC;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease-out;
+}
+.nav-link-pro:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+.icon-pro {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+.nav-link-pro:hover .icon-pro {
+  transform: scale(1.2);
+  color: #fff;
+  animation: pulse 0.5s ease;
+}
+/* --- Brand Link --- */
+.navbar-brand.brand-link {
+  /* color: #A011A0; */
+  color: #4A154B;
+  font-size: 2.25rem;
+  transition: text-shadow 0.3s ease;
+  z-index: 10;
+}
+.navbar-brand.brand-link:hover {
+  text-shadow: 0 0 10px #F2E03F, 0 0 20px #F5E133;
+}
+/* --- Buttons (Interactive) --- */
+.nav-btn-pro {
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+.nav-btn-pro:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.btn-outline-light.nav-btn-pro:hover {
+  background-color: #fff !important;
+  color: #141414 !important;
+}
+/* --- Dropdown Menu (Animated) --- */
+.dropdown-menu-pro {
+  background: rgba(30, 30, 30, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: fadeInDown 0.4s ease-out;
+}
+.dropdown-item-pro {
+  color: #B0B0B0 !important;
+  transition: all 0.2s ease;
+}
+.dropdown-item-pro:hover {
+  background-color: rgba(60, 60, 60, 0.7) !important;
+  color: #fff !important;
+  transform: translateX(5px);
+}

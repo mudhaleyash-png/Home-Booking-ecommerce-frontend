@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+/* Main Page Container */
+.edit-product-page {
+    background: linear-gradient(135deg, #F5F7FA 0%, #C3CFE2 100%);
+    /* min-height: 100vh; */
+    padding: 100px 0;
+    font-family: 'Poppins', sans-serif;
+}
+/* Card Styling */
+.product-form-card {
+    border-radius: 1rem;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.product-form-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+.product-form-title {
+    font-weight: 700;
+    color: #333;
+    letter-spacing: 1px;
+    font-size: 2rem;
+}
+/* Form Group Styling */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+.form-label {
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 0.5rem;
+}
+/* Input and Textarea Styling */
+.form-control {
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.form-control:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+/* Submit Button Styling */
+.btn-add-product {
+    background-image: linear-gradient(45deg, #007BFF 0%, #0056B3 100%);
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+.btn-add-product:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    background-image: linear-gradient(45deg, #0056B3 0%, #007BFF 100%);
+}
+.btn-add-product:disabled {
+    background-image: none;
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+/* Alert Message Styling */
+.alert {
+    border-radius: 0.5rem;
+    font-weight: 500;
+}

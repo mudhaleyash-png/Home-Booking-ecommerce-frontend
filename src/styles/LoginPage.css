@@ -1,0 +1,162 @@
+
+.login-page-container {
+  background: #F0F2F5; /* Soft, light gray base background */
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+}
+/* This creates the floating shape animation with the new light color palette */
+.animated-shapes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.animated-shapes::before,
+.animated-shapes::after {
+  content: '';
+  position: absolute;
+  background: rgba(150, 200, 255, 0.5); /* Light blue hue */
+  animation: float 20s infinite ease-in-out;
+  border-radius: 50%;
+  filter: blur(60px);
+}
+.animated-shapes::before {
+  top: 10%;
+  left: 20%;
+  width: 300px;
+  height: 300px;
+  animation-delay: 2s;
+  animation-duration: 25s;
+}
+.animated-shapes::after {
+  bottom: 5%;
+  right: 15%;
+  width: 400px;
+  height: 400px;
+  background: rgba(180, 150, 255, 0.5); /* Light purple hue */
+  animation-delay: 5s;
+  animation-duration: 22s;
+}
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(-20vw, 15vh) rotate(45deg);
+  }
+  50% {
+    transform: translate(15vw, 20vh) rotate(90deg);
+  }
+  75% {
+    transform: translate(-10vw, -10vh) rotate(135deg);
+  }
+}
+/* --- Login Panel Styles (Innovative & Interactive) --- */
+.login-panel {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 450px;
+  background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transform: scale(0.9);
+  transition: transform 0.4s ease-out;
+}
+.login-panel:hover {
+  transform: scale(0.95);
+}
+/* --- Form and Input Styles --- */
+.form-group {
+  position: relative;
+}
+.input-group-text {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-right: none;
+  color: #333;
+  transition: all 0.3s ease;
+}
+.form-control {
+  background: rgba(255, 255, 255, 0.8);
+  color: #333;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+.form-control::placeholder {
+  color: #999;
+}
+/* Professional hover/focus effect with new colors */
+.form-control:focus, .input-group-text:focus-within {
+  background: #fff;
+  box-shadow: 0 0 0 0.25rem rgba(100, 100, 255, 0.3); /* Focus glow color */
+  border-color: #6464FF; /* Focus border color */
+}
+/* --- Button Animations --- */
+.login-btn {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  overflow: hidden;
+  position: relative;
+  border: 2px solid #6464FF; /* Button border color */
+  background-color: transparent;
+  color: #6464FF;
+}
+.login-btn:hover:not(:disabled) {
+  transform: translateY(-5px);
+  background-color: #6464FF; /* Button hover background color */
+  color: #fff;
+  box-shadow: 0 5px 20px rgba(100, 100, 255, 0.4);
+}
+.login-btn:disabled {
+  background-color: #eee !important;
+  color: #999 !important;
+  cursor: not-allowed;
+  transform: none;
+}
+/* Spinner animation for the login button */
+.spinner {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* --- Entrance Animations --- */
+.animate__fadeInUp {
+  animation: fadeInUp 1.2s ease-out forwards;
+  opacity: 0;
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate__shake {
+  animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+}
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}

@@ -1,0 +1,144 @@
+body {
+  background-color: #F8F9FA; /* Light gray background */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+.product-page-content {
+  padding-bottom: 5rem;
+}
+/* Header Section */
+.product-page-header {
+  background: linear-gradient(135deg, #1F2A40 0%, #3A5068 100%);
+  color: #FFFFFF;
+  padding: 5rem 0;
+  text-align: center;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.product-page-header h1 {
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+/* Product Card */
+.product-card {
+  border: none;
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  background-color: #FFFFFF;
+}
+.product-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+.product-card-img-container {
+  overflow: hidden;
+  border-bottom: 1px solid #eee;
+  background-color: #F1F1F1;
+}
+.product-card-img-container img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.product-card:hover img {
+  transform: scale(1.05);
+}
+.card-body {
+  padding: 1.5rem;
+}
+.card-title {
+  color: #333;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+.card-text {
+  color: #666;
+}
+.text-primary {
+  color: #007BFF !important; /* A more vibrant blue */
+}
+/* Buttons */
+.btn-add-to-cart {
+  background-color: #007BFF;
+  border-color: #007BFF;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.btn-add-to-cart:hover {
+  background-color: #0056B3;
+  border-color: #004085;
+  transform: scale(1.05);
+}
+.btn-view-details {
+  border-radius: 20px;
+  padding: 0.5rem 1.5rem;
+  transition: all 0.3s ease;
+}
+.btn-view-details:hover {
+  background-color: #E9ECEF;
+}
+/* Toast Message */
+.custom-toast-message {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  min-width: 250px;
+  padding: 15px 20px;
+  border-radius: 10px;
+  color: #fff;
+  z-index: 1050;
+  animation: slideInUp 0.5s ease-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.custom-toast-message.success {
+  background-color: #28A745;
+}
+.custom-toast-message.danger {
+  background-color: #DC3545;
+}
+@keyframes slideInUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+/* Empty State */
+.empty-state {
+  padding: 5rem 0;
+  color: #6C757D;
+}
+.empty-state svg {
+  color: #ADB5BD !important;
+}
+/* Responsive Grid */
+@media (max-width: 768px) {
+  .product-page-header {
+    padding: 3rem 0;
+  }
+}
+/* Add to the top of your ProductPage.css file */
+.hero-section {
+  background: linear-gradient(135deg, #1F2A40 0%, #3A5068 100%);
+  padding: 8rem 0;
+  border-bottom: 2px solid #555;
+}
+.hero-section h1 {
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.search-bar .input-group-text {
+  background-color: #fff;
+  border-right: none;
+  color: #3A5068;
+}
+.search-bar .form-control {
+  border-left: none;
+}
+.search-bar .form-control:focus {
+  box-shadow: 0 0 0 0.25rem rgba(58, 80, 104, 0.25);
+  border-color: #3A5068;
+}
