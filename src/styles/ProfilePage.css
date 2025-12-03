@@ -20,9 +20,6 @@
   border-radius: 5px;
   text-align: center;
   font-weight: bold;
-}
-
-.status-message {
   background-color: #dff0d8;
   color: #3c763d;
 }
@@ -34,7 +31,6 @@
   color: #555;
 }
 
-.profile-form input[type="text"],
 .profile-form input[type="email"] {
   width: 100%;
   padding: 8px 10px;
