@@ -1,152 +1,236 @@
-/*
-* @fileoverview The AddProduct component provides a form interface for users
- * to input new product details, including converting a selected image file
- * into a Base64 string before submission to the backend service.
- */
-// Import necessary React hooks and functions.
+// This line imports the main React library, along with the `useState` and `useContext` hooks.
+// `useState` is used to manage component-specific data (state).
+// `useContext` is used to access data from a React Context.
 import React, { useState, useContext } from "react";
-// useNavigate is a hook from React Router used for programmatic navigation.
+// This line imports the `useNavigate` hook from `react-router-dom`,
+// which allows us to navigate programmatically to different routes.
 import { useNavigate } from "react-router-dom";
-// Imports an external service layer function for API interaction (creating the product).
+// This line imports the `productService` object, which contains the functions
+// for making API calls related to products.
 import productService from "../../services/productService";
-// Imports the Authentication Context to access the current user's token for authorization.
+// This line imports the `AuthContext` to access user authentication data.
 import AuthContext from "../../context/AuthContext";
-// Imports the necessary CSS for styling (Bootstrap framework).
-import "bootstrap/dist/css/bootstrap.min.css";
-// Imports custom styling specific to this component.
-import "../../styles/AddProduct.css";
-/**
- * 'const AddProduct = () => { ... }' defines the main functional component.
- */
+import "../../styles/AddProduct.css"; // Keep custom CSS for styling details
+// This is the functional component for adding a new product.
 const AddProduct = () => {
-  // 'const navigate = useNavigate();' initializes the navigation function from React Router.
-  const navigate = useNavigate();
-  // Destructures 'currentUser' from the AuthContext using the useContext hook.
-  // This user object should contain the authorization token required for the API call.
-  const { currentUser } = useContext(AuthContext);
-  // This state now manages the text-based form data
-  /**
-   * 'const [formData, setFormData] = useState({ ... });' initializes state for all text inputs.
-   * 'formData': Holds the current values of the form fields.
-   * 'setFormData': The function to update this state.
-   */
-  const [formData, setFormData] = useState({
-    name: "",      // Product name (string)
-    description: "", // Product description (string)
-    price: "",     // Product price (string, will be converted to number later)
-    stock: "",     // Product stock quantity (string, will be converted to number later)
-  });
-  // This new state holds the selected file object
-  /**
-   * 'const [image_url, setImageFile] = useState(null);' initializes state to hold the file object itself.
-   * 'image_url' is named to reflect its intended final use as a source/URL.
-   */
-  const [image_url, setImageFile] = useState(null);
-  /**
-   * State for displaying success or error messages to the user.
-   */
-  const [message, setMessage] = useState("");
-  /**
-   * State for managing the submission process (to disable the button and show a loader).
-   */
-  const [loading, setLoading] = useState(false);
-  // This handles changes for all text inputs
-  /**
-   * 'const handleChange = (e) => { ... }' is the generic change handler for text inputs.
-   * 'e' is the synthetic event object.
-   */
-  const handleChange = (e) => {
-    // Destructure 'name' and 'value' properties from the input field that triggered the event.
-    const { name, value } = e.target;
-    // Update the 'formData' state by spreading the previous state and overriding the specific field.
-    setFormData({
-      ...formData,
-      [name]: value, // Uses computed property names ([name]) to dynamically update the correct key.
+    // `useNavigate` is initialized here to get the navigation function.
+    const navigate = useNavigate();
+    // `useContext` is used to get the `currentUser` object from `AuthContext`.
+    // The `currentUser` object contains user details and the authentication token.
+    const { currentUser } = useContext(AuthContext);
+    // This `useState` hook manages the form data.
+    // The state is an object with keys for each form input field.
+    const [formData, setFormData] = useState({
+        name: "",
+        description: "",
+        price: "",
+        image_url: "",
+        stock: "",
     });
-  };
-  // This new function handles the file input change
-  /**
-   * 'const handleFileChange = (e) => { ... }' is the specific handler for the file input field.
-   */
-  const handleFileChange = (e) => {
-    // Get the first file from the event target's files array (files[0]).
-    const file = e.target.files[0];
-    // Check if a file was successfully selected.
-    if (file) {
-      // Store the file object itself in the component state.
-      setImageFile(file);
-    }
-  };
-  // The asynchronous function handles the form submission
-  /**
-   * 'const handleSubmit = async (e) => { ... }' is the main function executed on form submission.
-   * 'async' indicates it handles asynchronous operations (API calls).
-   */
-  const handleSubmit = async (e) => {
-    // 'e.preventDefault();' prevents the default browser action (page reload) for form submission.
-    e.preventDefault();
-    // Start loading state.
-    setLoading(true);
-    // Clear any previous messages.
-    setMessage("");
-    // Use a FileReader to convert the image file to a Base64 string
-    /**
-     * 'const reader = new FileReader();' creates a new instance of the FileReader API.
-     * This is a native browser API used to asynchronously read the contents of files.
-     */
-    const reader = new FileReader();
-    // This callback function runs when the file has been fully read
-    /**
-     * 'reader.onloadend = async () => { ... }' sets a callback function that executes
-     * once the 'readAsDataURL' operation (started below) is complete, whether success or failure.
-     * The callback is marked 'async' because it contains the final API call.
-     */
-    reader.onloadend = async () => {
-      // 'reader.result' contains the Base64 encoded string (prefixed with mime type, e.g., "data:image/png;base64,...").
-      const base64String = reader.result;
-      // Combine the form data and the new Base64 string
-      // Create the final payload object to send to the API.
-      const productData = {
-        ...formData, // Spread all text input data (name, price, etc.)
-        image_url: base64String, // Add the encoded image string under the 'imageUrl' key.
-      };
-      try {
-        // Call the service function to send data to the backend API.
-        const newProduct = await productService.createProduct(
-          productData,
-          // Pass the user's token (or authentication key) for API authorization.
-          currentUser.token
-        );
-        // Check if the API call returned a product successfully.
-        if (newProduct) {
-          setMessage("Product created successfully!");
-          // Use setTimeout for a delayed, controlled navigation after success.
-          setTimeout(() => {
-            navigate("/products");
-          }, 2000);
-        }
-      } catch (error) {
-        // Handle API errors. Attempt to get a specific message from the error response structure.
-        const errorMessage =
-          error.response?.data?.message || "An unexpected error occurred.";
-        setMessage(`Error: ${errorMessage}`);
-      } finally {
-        // Ensure the loading state is reset regardless of success or failure.
-        setLoading(false);
-      }
+    // This `useState` hook manages the message to be displayed to the user
+    // after an action (success or error).
+    const [message, setMessage] = useState("");
+    const [error, setError] = useState("");
+    // This `useState` hook manages the loading state, which is used to
+    // disable the submit button and show a loading indicator.
+
+    const [loading, setLoading] = useState(false);
+    // This function handles changes to any of the form input fields.
+    const handleChange = (e) => {
+        // Destructure `name` and `value` from the event target (`e.target`).
+        // `name` corresponds to the `name` attribute of the input, and `value` is its current value.
+        const { name, value } = e.target;
+        // Update the `formData` state.
+        setFormData({
+            // The spread operator (`...`) copies all existing key-value pairs from `formData`.
+            ...formData,
+            // Computed property name `[name]: value` updates the specific field
+            // that was changed, without affecting others.
+            [name]: value,
+        });
     };
-    // If a file is selected, start the conversion process. Otherwise, show an error.
-    // Check if the file state ('image_url') holds a file object.
-    if (image_url) {
-      // CRITICAL: Call readAsDataURL on the selected file. This starts the asynchronous process
-      // that will eventually trigger the 'onloadend' callback defined above.
-      reader.readAsDataURL(image_url);
-    } else {
-      // If no file was selected, stop loading and display an error immediately.
-      setLoading(false);
-      setMessage("Error: Please select an image file.");
-    }
-  };
+    // This asynchronous function handles the form submission.
+    const handleSubmit = async (e) => { //(e) event referrence
+        // `e.preventDefault()` stops the default browser behavior of refreshing the page on form submission.
+        e.preventDefault();
+        // Set `loading` to `true` to start the loading state.
+        setLoading(true);
+        // Clear any previous messages.
+        setMessage("");
+        //Clear any previous errors
+        setError("");
+
+        // A `try...catch` block is used to handle success and failure of the API call.
+        try {
+            // Call the `createProduct` function from the `productService`.
+            // We pass the `formData` and the user's `token` for authentication.
+            const newProduct = await productService.createProduct(
+                formData,
+                currentUser.token
+            );
+            // If `newProduct` is a truthy value, it means the product was created successfully.
+            if (newProduct) {
+                // Set a success message.
+                setMessage("Product created successfully!");
+                // `setTimeout` is used to wait 2 seconds before navigating.
+                setTimeout(() => {
+                    // The `Maps` function redirects the user to the `/products` route.
+                    navigate("/products");
+                }, 2000);
+            }
+        } catch (error) {
+            console.error(error);
+            // If an error occurs, this block is executed.
+            // We try to get a specific error message from the Axios response
+            // (`error.response?.data?.message`), or use a generic one if it's not available.
+            const errorMessage =
+                error.response?.data?.message || "An unexpected error occurred.";
+            
+            // Set the error message to be displayed.
+            setError(`Error: ${errorMessage}`);
+
+        } finally {
+            // The `finally` block runs after either the `try` or `catch` block.
+            // It ensures that `loading` is set to `false`, regardless of the outcome.
+            setLoading(false);
+        }
+    };
+    // The `return` statement renders the component's JSX.
+    return (
+        // The main container div for the page, with a custom class for styling.
+        <div className="add-product-page ">
+            <div className="container mt-3">
+                <div className="row justify-content-center">
+                    <div className="col-md-8">
+                        {" "}
+                        {/* Adjusted column size for a wider card */}
+                        {/* A card component with a shadow and custom class for styling. */}
+                        <div className="card shadow-lg product-form-card">
+                            <div className="card-body">
+                                <h2 className="card-title text-center mb-4 product-form-title">
+                                    Add New Product 🛍️
+                                </h2>
+                                {/* The form element with an `onSubmit` event handler. */}
+                                <form onSubmit={handleSubmit} className="product-form">
+                                    <div className="row">
+                                        {/* Product Name Input */}
+                                        <div className="col-md-6 mb-3 form-group">
+                                            <label htmlFor="name" className="form-label">
+                                                Product Name
+                                            </label>
+                                            {/* The input field. `value` and `onChange` bind it to the state. */}
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="name"
+                                                name="name"
+                                                value={formData.name}
+                                                onChange={handleChange}
+                                                required
+                                            />
+                                        </div>
+                                        {/* Product Price Input */}
+                                        <div className="col-md-6 mb-3 form-group">
+                                            <label htmlFor="price" className="form-label">
+                                                Price
+                                            </label>
+                                            <input
+                                                type="number"
+                                                className="form-control"
+                                                id="price"
+                                                name="price"
+                                                value={formData.price}
+                                                onChange={handleChange}
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+                                    {/* Product Description Input (full width) */}
+                                    <div className="mb-3 form-group">
+                                        <label htmlFor="description" className="form-label">
+                                            Description
+                                        </label>
+                                        <textarea
+                                            className="form-control"
+                                            id="description"
+                                            name="description"
+                                            rows="3"
+                                            value={formData.description}
+                                            onChange={handleChange}
+                                            required
+                                        ></textarea>
+                                    </div>
+                                    <div className="row">
+                                        {/* Product Image URL Input */}
+                                        <div className="col-md-6 mb-3 form-group">
+                                            <label htmlFor="imageUrl" className="form-label">
+                                                Image URL
+                                            </label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="imageUrl"
+                                                name="image_url"
+                                                value={formData.image_url}
+                                                onChange={handleChange}
+                                                required
+                                            />
+                                        </div>
+                                        {/* Product Stock Input */}
+                                        <div className="col-md-6 mb-3 form-group">
+                                            <label htmlFor="stock" className="form-label">
+                                                Stock
+                                            </label>
+                                            <input
+                                                type="number"
+                                                className="form-control"
+                                                id="stock"
+                                                name="stock"
+                                                value={formData.stock}
+                                                onChange={handleChange}
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+                                    {/* Submit Button */}
+                                    <div className="d-flex justify-content-center">
+                                        <button
+                                            type="submit"
+                                            className="btn btn-primary w-50 btn-add-product"
+                                            // The `disabled` attribute prevents users from submitting the form while the request is in progress.
+                                            disabled={loading}
+                                        >
+                                            {/* The button text changes based on the `loading` state. */}
+                                            {loading ? "Adding..." : "Add Product"}
+                                        </button>
+                                    </div>
+                                </form>
+                                
+                                {/* Message Display */}
+                                {/* This uses conditional rendering to display the message only if it's not empty. */}
+                                {message && (
+                                    <div
+                                        className={`alert ${"alert-success"} mt-3 text-center`}
+                                        role="alert"
+                                    >
+                                        {message}
+                                    </div>
+                                )}
+                                {error && (
+                                    <div
+                                        className={`alert ${"alert-danger"} mt-3 text-center`}
+                                        role="alert"
+                                    >
+                                        {error}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 };
-  //Export the component so it can be used in other files (e.g., in routing setup).
+// Export the component for use in other parts of the application.
 export default AddProduct;

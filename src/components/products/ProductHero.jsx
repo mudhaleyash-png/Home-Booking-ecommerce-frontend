@@ -1,19 +1,19 @@
-/*
-* @fileoverview Defines the Hero component, which serves as a prominent
+/**
+ * @fileoverview Defines the Hero component, which serves as a prominent
  * introductory section featuring a title, tagline, and a functional search bar.
  * This component relies on external libraries like react-icons, react-router-dom,
  * and external Bootstrap/CSS imports.
  */
 // Import the core React library for building the component.
-import React from 'react';
+import React from "react";
 // Import the specific search icon (FaSearch) from the Font Awesome icon library.
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch } from "react-icons/fa";
 // Import the Link component from React Router for navigation without full page reloads.
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 // Import the necessary external CSS file for Bootstrap styling.
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import "bootstrap/dist/css/bootstrap.min.css";
 // Import a local stylesheet specific to the product page/layout.
-import '../../styles/ProductsPage.css'; // Use the same stylesheet
+import "../../styles/ProductsPage.css"; // Use the same stylesheet
 /**
  * Defines the functional component 'Hero'.
  * @param {Object} props - The properties passed to the component.
@@ -47,18 +47,18 @@ const ProductHero = ({ searchTerm, setSearchTerm }) => {
           {/* display-3: Large, prominent Bootstrap heading size. */}
           {/* fw-bold: Font weight bold. */}
           {/* animate__animated animate__fadeInDown: Classes from the external 'animate.css' library for animation effects. */}
-          Explore Our Collection
+          Browse Fresh Groceries
         </h1>
         {/* Tagline / Subtitle */}
         <p className="lead animate__animated animate__fadeInUp animate__delay-1s">
           {/* lead: Bootstrap class to make the text stand out slightly. */}
           {/* animate__delay-1s: Delays the animation start by 1 second. */}
-          Find exactly what you need with our curated selection.
+          Everything you need, just a click away
         </p>
         {/* Search Bar Wrapper */}
         <div className="search-bar mt-4 animate__animated animate__fadeIn animate__delay-2s">
           {/* Input Group: Bootstrap utility for combining form controls and accompanying elements (like the icon). */}
-          <div className="input-group mx-auto" style={{ maxWidth: '600px' }}>
+          <div className="input-group mx-auto" style={{ maxWidth: "600px" }}>
             {/* Input Group Text: The span wrapping the search icon. */}
             <span className="input-group-text">
               {/* Renders the search icon from react-icons/fa. */}
